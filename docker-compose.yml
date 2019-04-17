@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  telegraf:
+    image: telegraf:1.10
+    command: ["telegraf", "--config", "/telegraf.conf"]
+    volumes:
+      - "/:/hostfs:ro"
+      - "/home/kubo/wavefront/telegraf.conf:/telegraf.conf"
+    environment:
+      - HOST_MOUNT_PREFIX=/hostfs
+      - HOST_PROC=/hostfs/proc
+  wavefront-proxy:
+    image: wavefronthq/proxy:4.26
+    environment:
+      - WAVEFRONT_URL=https://nimba.wavefront.com/api
+      - WAVEFRONT_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - WAVEFRONT_HOSTNAME=my-cluster
+      - WAVEFRONT_PROXY_ARGS=--prefix pks
