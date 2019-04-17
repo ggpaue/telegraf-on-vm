@@ -5,7 +5,7 @@ services:
     command: ["telegraf", "--config", "/telegraf.conf"]
     volumes:
       - "/:/hostfs:ro"
-      - "/home/kubo/wavefront/telegraf.conf:/telegraf.conf"
+      - "/root/telegraf.conf:/telegraf.conf"
     environment:
       - HOST_MOUNT_PREFIX=/hostfs
       - HOST_PROC=/hostfs/proc
