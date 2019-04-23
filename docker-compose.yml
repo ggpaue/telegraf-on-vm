@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   telegraf:
-    image: telegraf:1.10
+    image: telegraf:latest
     command: ["telegraf", "--config", "/telegraf.conf"]
     volumes:
       - "/:/hostfs:ro"
@@ -10,9 +10,11 @@ services:
       - HOST_MOUNT_PREFIX=/hostfs
       - HOST_PROC=/hostfs/proc
   wavefront-proxy:
-    image: wavefronthq/proxy:4.26
+    image: wavefronthq/proxy:latest
     environment:
-      - WAVEFRONT_URL=https://nimba.wavefront.com/api
+      - WAVEFRONT_URL=https://nimba.wavefront.com/api/
       - WAVEFRONT_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - WAVEFRONT_HOSTNAME=my-cluster
-      - WAVEFRONT_PROXY_ARGS=--prefix pks
+      - JAVA_HEAP_USAGE=512m
+    ports:
+      - "2878:2878"
+      - "4242:4242"
